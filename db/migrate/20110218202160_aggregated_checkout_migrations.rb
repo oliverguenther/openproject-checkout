@@ -23,10 +23,13 @@ class AggregatedCheckoutMigrations < ActiveRecord::Migration
   def up
     migration_names = OpenProject::Plugins::MigrationMapping.migration_files_to_migration_names(MIGRATION_FILES, OLD_PLUGIN_NAME)
     Migration::MigrationSquasher.squash(migration_names) do
+      add_column :repositories, :checkout_settings, :text
     end
+    Repository.reset_column_information
   end
 
   def down
+    remove_column :repositories, :checkout_settings
   end
 end
 
