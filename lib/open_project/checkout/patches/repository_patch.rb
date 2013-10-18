@@ -10,6 +10,7 @@ module OpenProject::Checkout
       base.class_eval do
         unloadable
         serialize :checkout_settings, Hash
+        after_initialize :init_checkout_settings
       end
     end
 
@@ -26,7 +27,7 @@ module OpenProject::Checkout
     end
 
     module InstanceMethods
-      def after_initialize
+      def init_checkout_settings
         self.checkout_settings ||= {}
       end
 
