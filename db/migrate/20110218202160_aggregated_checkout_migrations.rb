@@ -1,4 +1,5 @@
 require Rails.root.join("db","migrate","migration_utils","migration_squasher").to_s
+require Rails.root.join("db","migrate","migration_utils","setting_renamer").to_s
 require 'open_project/plugins/migration_mapping'
 # This migration aggregates the migrations detailed in MIGRATION_FILES
 class AggregatedCheckoutMigrations < ActiveRecord::Migration
@@ -26,6 +27,7 @@ class AggregatedCheckoutMigrations < ActiveRecord::Migration
       add_column :repositories, :checkout_settings, :text
     end
     Repository.reset_column_information
+    Migration::SettingRenamer.rename("plugin_redmine_checkout","plugin_openproject_checkout")
   end
 
   def down
