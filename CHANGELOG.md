@@ -1,5 +1,7 @@
 # Changelog
 
+* `#2731` Migrated serialized yaml from syck to psych
+
 ## 2.0.0.pre6
 
 * `#2545` Migrated old plugin settings
