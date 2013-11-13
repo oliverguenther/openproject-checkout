@@ -1,5 +1,7 @@
 # Changelog
 
+## 2.0.0.pre7
+
 * `#2731` Migrated serialized yaml from syck to psych
 
 ## 2.0.0.pre6
