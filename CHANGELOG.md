@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0.pre8
+
+* Updated dependency to plugins plugin
+
 ## 2.0.0.pre7
 
 * `#2731` Migrated serialized yaml from syck to psych
