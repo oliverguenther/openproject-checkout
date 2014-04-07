@@ -42,7 +42,7 @@ Please select the desired protocol below to get the URL.
     end
 
     initializer 'checkout.precompile_ssets' do
-      Rails.application.config.assets.precompile += %w(checkout.css checkout.js)
+      Rails.application.config.assets.precompile += %w(checkout/checkout.css checkout/checkout.js)
     end
 
     initializer "checkout.register_hooks" do
