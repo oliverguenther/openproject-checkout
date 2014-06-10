@@ -16,6 +16,10 @@ module OpenProject::Checkout
       end
     end
 
+    def view_repositories_show_contextual(context)
+      show_repository_context(context, context[:project], context[:repository])
+    end
+
     private
 
     def show_repository_context(context, project, repository)
