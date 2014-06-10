@@ -11,7 +11,15 @@ module OpenProject::Checkout
       project = context[:project]
       repository = project ? project.repository : nil
 
-      return unless params[:controller] == "repositories" && repository && (
+      if params[:controller] == "repository"
+        show_repository_context(context, context[:project], context[:repository])
+      end
+    end
+
+    private
+
+    def show_repository_context(context, project, repository)
+      return unless repository && (
         Setting.checkout_display_checkout_info == 'everywhere' || (
           Setting.checkout_display_checkout_info == 'browse' &&
           context[:request].params[:action] == 'show'
