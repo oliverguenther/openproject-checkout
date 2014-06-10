@@ -3,7 +3,7 @@ module OpenProject::Checkout
     # Renders the checkout URL
     #
     # Context:
-    # * :params => Current parameter
+    # * :params => Current parameters
     # * :project => Current project
     #
     def view_common_error_details(context={})
