@@ -17,7 +17,7 @@ describe RepositoriesController do
 
     @repository = Repository::Subversion.create(:project => project,
              :url => subversion_repository_url)
-    @controller.stub(:user_setup)
+    allow(@controller).to receive(:user_setup)
 
     setup_subversion_protocols
 
@@ -41,16 +41,16 @@ describe RepositoriesController do
     User.current = User.new
 
     get_repo
-    response.code.should == '403'
-    response.should render_template('common/error')
+    expect(response.code).to eq('403')
+    expect(response).to render_template('common/error')
   end
 
   it "should display the protocol selector" do
     get_repo
-    response.should be_success
-    response.should render_template('show')
+    expect(response).to be_success
+    expect(response).to render_template('show')
 
-    response.body.should have_selector('ul#checkout_protocols') do
+    expect(response.body).to have_selector('ul#checkout_protocols') do
       with_tag('a[id=?][href=?]', 'checkout_protocol_subversion', "file:///#{Rails.root.to_s.gsub(%r{config\/\.\.}, '')}/tmp/test/subversion_repository")
       with_tag('a[id=?][href=?]', 'checkout_protocol_svn+ssh', 'svn+ssh://repouser@svn.foo.bar/svn/subversion_repository')
     end
@@ -58,10 +58,10 @@ describe RepositoriesController do
 
   it "should display the description" do
     get_repo
-    response.should be_success
-    response.should render_template('show')
+    expect(response).to be_success
+    expect(response).to render_template('show')
 
-    response.body.should have_selector('div.repository-info', /Please select the desired protocol below to get the URL/)
+    expect(response.body).to have_selector('div.repository-info', /Please select the desired protocol below to get the URL/)
   end
 
   describe 'display_checkout_info' do
@@ -69,42 +69,42 @@ describe RepositoriesController do
       Setting.stub(:checkout_display_checkout_info).and_return('none')
 
       get_repo
-      response.should be_success
-      response.should render_template('show')
-      response.body.should_not have_selector('div.repository-info')
+      expect(response).to be_success
+      expect(response).to render_template('show')
+      expect(response.body).not_to have_selector('div.repository-info')
 
       get :entry, :project_id => @project.id, :path => "subversion_test/folder/helloworld.rb"
-      response.should be_success
-      response.should render_template('entry')
-      response.body.should_not have_selector('div.repository-info')
+      expect(response).to be_success
+      expect(response).to render_template('entry')
+      expect(response.body).not_to have_selector('div.repository-info')
     end
 
     it 'should display on directory views only when "browse" is selected' do
       Setting.stub(:checkout_display_checkout_info).and_return('browse')
 
       get_repo
-      response.should be_success
-      response.should render_template('show')
-      response.body.should have_selector('div.repository-info', /Please select the desired protocol below to get the URL/)
+      expect(response).to be_success
+      expect(response).to render_template('show')
+      expect(response.body).to have_selector('div.repository-info', /Please select the desired protocol below to get the URL/)
 
       get :entry, :project_id => @project.id, :path => "subversion_test/folder/helloworld.rb"
-      response.should be_success
-      response.should render_template('entry')
-      response.body.should_not have_selector('div.repository-info')
+      expect(response).to be_success
+      expect(response).to render_template('entry')
+      expect(response.body).not_to have_selector('div.repository-info')
     end
 
     it 'should display on all pages when "everywhere" is selected' do
       Setting.stub(:checkout_display_checkout_info).and_return('everywhere')
 
       get_repo
-      response.should be_success
-      response.should render_template('show')
-      response.body.should have_selector('div.repository-info', /Please select the desired protocol below to get the URL/)
+      expect(response).to be_success
+      expect(response).to render_template('show')
+      expect(response.body).to have_selector('div.repository-info', /Please select the desired protocol below to get the URL/)
 
       get :entry, :project_id => @project.id, :path => "subversion_test/folder/helloworld.rb"
-      response.should be_success
-      response.should render_template('entry')
-      response.body.should have_selector('div.repository-info')
+      expect(response).to be_success
+      expect(response).to render_template('entry')
+      expect(response.body).to have_selector('div.repository-info')
     end
   end
 end
