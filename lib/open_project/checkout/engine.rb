@@ -83,7 +83,7 @@ Please select the desired protocol below to get the URL.
         description spec.description
         version spec.version
 
-        requires_openproject ">= 3.0.0pre30"
+        requires_openproject ">= 4.0.0"
 
         settings :default => Engine.settings, :partial => 'settings/openproject_checkout'
 

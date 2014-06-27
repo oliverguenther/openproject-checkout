@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.files       = Dir["{app,config,db,lib}/**/*", "README.rdoc", "CHANGELOG.md"]
   s.test_files  = Dir["spec/**/*"]
 
-  s.add_dependency "openproject-plugins", "~> 3.0.8"
+  s.add_dependency "openproject-plugins", "~> 4.0.0"
 
   s.add_development_dependency "factory_girl_rails", "~> 4.0"
 end
