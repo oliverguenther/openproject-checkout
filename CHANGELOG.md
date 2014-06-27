@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.8
+
+* Fix path of assets that should be precompiled
+
 ## 2.0.0
 
 * `#7700` No flash message on status page
