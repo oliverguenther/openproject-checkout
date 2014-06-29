@@ -34,6 +34,3 @@ class AggregatedCheckoutMigrations < ActiveRecord::Migration
     remove_column :repositories, :checkout_settings
   end
 end
-
-
-

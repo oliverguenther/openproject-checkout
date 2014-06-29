@@ -20,4 +20,3 @@ module OpenProject::Checkout
 end
 
 SettingsHelper.send(:include, OpenProject::Checkout::SettingsHelperPatch)
-
