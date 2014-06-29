@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe OpenProject::Checkout::Protocol do
+describe OpenProject::Checkout::Protocol, :type => :model do
 
   let(:project) { FactoryGirl.create(:project, is_public: true) }
   let(:role) { FactoryGirl.create(:role, permissions: [:browse_repository]) }

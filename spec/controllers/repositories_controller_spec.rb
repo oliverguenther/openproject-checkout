@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 # This spec requires the test svn repository to be set up:
 # rake test:scm:setup:subversion
-describe RepositoriesController do
+describe RepositoriesController, :type => :controller do
 
   let(:project) { FactoryGirl.create(:project, is_public: true) }
   let(:user) { FactoryGirl.create(:user, login: "repouser", mail: "repouser@test.com") }

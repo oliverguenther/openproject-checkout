@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe Setting do
+describe Setting, :type => :model do
   before(:each) do
     Setting.stub(:default_language).and_return('en')
     Setting.stub(:checkout_display_checkout_info).and_return('everywhere')
