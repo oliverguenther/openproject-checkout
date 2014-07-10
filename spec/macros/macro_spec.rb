@@ -24,21 +24,21 @@ describe "Macros" do
     text = "{{repository}}"
 
     url = "file:///#{Rails.root.to_s.gsub(%r{config\/\.\.}, '')}/tmp/test/subversion_repository"
-    textilizable(text).should eql "<p><a href=\"#{url}\">#{url}</a></p>"
+    format_text(text).should eql "<p><a href=\"#{url}\">#{url}</a></p>"
   end
 
   it "should display forced checkout url" do
     text = "{{repository(svn+ssh)}}"
 
     url = 'svn+ssh://svn.foo.bar/svn/subversion_repository'
-    textilizable(text).should eql "<p><a href=\"#{url}\">#{url}</a></p>"
+    format_text(text).should eql "<p><a href=\"#{url}\">#{url}</a></p>"
   end
 
   it "should fail without set project" do
     @project = nil
 
     text = "{{repository(svn+ssh)}}"
-    textilizable(text).should eql "<p><div class=\"flash error\">Error executing the <strong>repository</strong> macro (Checkout protocol svn+ssh not found)</div></p>"
+    format_text(text).should eql "<p><div class=\"flash error\">Error executing the <strong>repository</strong> macro (Checkout protocol svn+ssh not found)</div></p>"
   end
 
   it "should display checkout url from stated project" do
@@ -46,7 +46,7 @@ describe "Macros" do
     text = "{{repository(#{project.name}:svn+ssh)}}"
 
     url = 'svn+ssh://svn.foo.bar/svn/subversion_repository'
-    textilizable(text).should eql "<p><a href=\"#{url}\">#{url}</a></p>"
+    format_text(text).should eql "<p><a href=\"#{url}\">#{url}</a></p>"
   end
 
   it "should display command" do
@@ -54,6 +54,6 @@ describe "Macros" do
 
     text = "{{repository(svn+ssh)}}"
     url = 'svn+ssh://svn.foo.bar/svn/subversion_repository'
-    textilizable(text).should eql "<p>svn co <a href=\"#{url}\">#{url}</a></p>"
+    format_text(text).should eql "<p>svn co <a href=\"#{url}\">#{url}</a></p>"
   end
 end
