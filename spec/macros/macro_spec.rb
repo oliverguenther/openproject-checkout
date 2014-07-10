@@ -38,7 +38,7 @@ describe "Macros" do
     @project = nil
 
     text = "{{repository(svn+ssh)}}"
-    format_text(text).should eql "<p><div class=\"flash error\">Error executing the <strong>repository</strong> macro (Checkout protocol svn+ssh not found)</div></p>"
+    format_text(text).should eql "<p><div class=\"flash error\">Error executing the macro repository (Checkout protocol svn+ssh not found)</div></p>"
   end
 
   it "should display checkout url from stated project" do
