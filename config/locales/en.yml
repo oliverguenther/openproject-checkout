@@ -5,7 +5,7 @@ en:
   setting_checkout_description: "Description"
   label_display_everywhere: "On all repository pages"
   label_display_browse: "Only on directory browsing views"
-  label_display_none: "Not at all (effectivly disables the plugin)"
+  label_display_none: "Not at all (effectively disables the plugin)"
 
   setting_checkout_fixed_url: "Checkout URL"
   setting_checkout_url_regex: "Regular expression"
