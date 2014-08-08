@@ -2,8 +2,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Setting, :type => :model do
   before(:each) do
-    Setting.stub(:default_language).and_return('en')
-    Setting.stub(:checkout_display_checkout_info).and_return('everywhere')
+    allow(Setting).to receive(:default_language).and_return('en')
+    allow(Setting).to receive(:checkout_display_checkout_info).and_return('everywhere')
   end
 
   it "should recognize checkout methods" do

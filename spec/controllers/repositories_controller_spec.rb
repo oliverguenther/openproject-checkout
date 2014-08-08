@@ -12,8 +12,8 @@ describe RepositoriesController, :type => :controller do
   render_views
 
   before(:each) do
-    Setting.stub(:default_language).and_return('en')
-    Setting.stub(:autofetch_changesets).and_return(false)
+    allow(Setting).to receive(:default_language).and_return('en')
+    allow(Setting).to receive(:autofetch_changesets).and_return(false)
 
     @repository = Repository::Subversion.create(:project => project,
              :url => subversion_repository_url)
@@ -66,7 +66,7 @@ describe RepositoriesController, :type => :controller do
 
   describe 'display_checkout_info' do
     it 'should display nothing when "none" is selected' do
-      Setting.stub(:checkout_display_checkout_info).and_return('none')
+      allow(Setting).to receive(:checkout_display_checkout_info).and_return('none')
 
       get_repo
       expect(response).to be_success
@@ -80,7 +80,7 @@ describe RepositoriesController, :type => :controller do
     end
 
     it 'should display on directory views only when "browse" is selected' do
-      Setting.stub(:checkout_display_checkout_info).and_return('browse')
+      allow(Setting).to receive(:checkout_display_checkout_info).and_return('browse')
 
       get_repo
       expect(response).to be_success
@@ -94,7 +94,7 @@ describe RepositoriesController, :type => :controller do
     end
 
     it 'should display on all pages when "everywhere" is selected' do
-      Setting.stub(:checkout_display_checkout_info).and_return('everywhere')
+      allow(Setting).to receive(:checkout_display_checkout_info).and_return('everywhere')
 
       get_repo
       expect(response).to be_success
