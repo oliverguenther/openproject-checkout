@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe Repository do
+describe Repository, :type => :model do
 
   describe "initialize" do
     before(:each) do
@@ -8,10 +8,10 @@ describe Repository do
     end
 
     it "should properly set default values" do
-      @repo.checkout_overwrite?.should be_false
-      @repo.checkout_description.should match /Please select the desired protocol below to get the URL/
-      @repo.allow_subtree_checkout?.should be_false
-      @repo.checkout_protocols.should eql []
+      expect(@repo.checkout_overwrite?).to be_falsey
+      expect(@repo.checkout_description).to match /Please select the desired protocol below to get the URL/
+      expect(@repo.allow_subtree_checkout?).to be_falsey
+      expect(@repo.checkout_protocols).to eql []
     end
   end
 
@@ -21,14 +21,14 @@ describe Repository do
       @git = Repository::Git.new
     end
     it "should be allowed on subversion" do
-      @svn.allow_subtree_checkout?.should eql true
+      expect(@svn.allow_subtree_checkout?).to eql true
     end
     it "should only be possible if checked" do
 
     end
 
     it "should be forbidden on git" do
-      @git.allow_subtree_checkout?.should eql false
+      expect(@git.allow_subtree_checkout?).to eql false
     end
   end
 
@@ -40,9 +40,9 @@ describe Repository do
 
     it "should provide protocols" do
       protocols = @repo.checkout_protocols
-      protocols[0].protocol.should eql "Subversion"
-      protocols[1].protocol.should eql "SVN+SSH"
-      protocols[2].protocol.should eql "Root"
+      expect(protocols[0].protocol).to eql "Subversion"
+      expect(protocols[1].protocol).to eql "SVN+SSH"
+      expect(protocols[2].protocol).to eql "Root"
     end
   end
 
@@ -53,7 +53,7 @@ describe Repository do
       # using something like nokogiri would be cleaner
       # but I don't want to introduce the dependency
 
-      repo.to_xml.match(/<checkout-settings[^>]*?type=['"]yaml['"].*?>/).should be_nil
+      expect(repo.to_xml.match(/<checkout-settings[^>]*?type=['"]yaml['"].*?>/)).to be_nil
     end
   end
 end

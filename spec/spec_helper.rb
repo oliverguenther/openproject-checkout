@@ -2,7 +2,7 @@
 require "spec_helper"
 
 def setup_subversion_protocols
-  Setting.stub(:checkout_protocols_Subversion) { [
+  allow(Setting).to receive(:checkout_protocols_Subversion) { [
     HashWithIndifferentAccess.new({
       command: 'svn checkout',
       regex: 'foo',

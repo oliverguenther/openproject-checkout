@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe OpenProject::Checkout::Protocol do
+describe OpenProject::Checkout::Protocol, :type => :model do
 
   let(:project) { FactoryGirl.create(:project, is_public: true) }
   let(:role) { FactoryGirl.create(:role, permissions: [:browse_repository]) }
@@ -20,24 +20,24 @@ describe OpenProject::Checkout::Protocol do
 
   it "should use regexes for generated URL" do
     protocol = repo.checkout_protocols.find{|r| r.protocol == "SVN+SSH"}
-    protocol.url.should eql "svn+ssh://svn.foo.bar/svn/testrepo"
+    expect(protocol.url).to eql "svn+ssh://svn.foo.bar/svn/testrepo"
   end
 
   it "should resolve access properties" do
     protocol = repo.checkout_protocols.find{|r| r.protocol == "Subversion"}
-    protocol.access.should eql "permission"
-    protocol.access_rw(admin).should eql "read+write"
+    expect(protocol.access).to eql "permission"
+    expect(protocol.access_rw(admin)).to eql "read+write"
 
     User.current = user
-    protocol.access_rw(user).should eql "read-only"
+    expect(protocol.access_rw(user)).to eql "read-only"
   end
 
   it "should display the checkout command" do
     subversion = repo.checkout_protocols.find{|r| r.protocol == "Subversion"}
     svn_ssh = repo.checkout_protocols.find{|r| r.protocol == "SVN+SSH"}
 
-    subversion.command.should eql "svn checkout"
-    svn_ssh.command.should eql "svn co"
+    expect(subversion.command).to eql "svn checkout"
+    expect(svn_ssh.command).to eql "svn co"
   end
 
   it "should respect display login settings" do
@@ -50,10 +50,10 @@ describe OpenProject::Checkout::Protocol do
     protocol = repo.checkout_protocols.find{|r| r.protocol == "Root"}
 
     protocol.display_login = '0'
-    protocol.url.should eql "http://example.com/svn/testrepo"
+    expect(protocol.url).to eql "http://example.com/svn/testrepo"
 
     protocol.display_login = '1'
-    protocol.url.should eql "http://der_baer@example.com/svn/testrepo"
+    expect(protocol.url).to eql "http://der_baer@example.com/svn/testrepo"
   end
 
 end
