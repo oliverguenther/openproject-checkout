@@ -27,15 +27,15 @@ Please select the desired protocol below to get the URL.
         #   read-only => this protocol always allows read access only
         #   permission => Access depends on redmine permissions
         settings_defaults["protocols_#{scm}"] = [HashWithIndifferentAccess.new({
-          :protocol => scm,
-          :command => klazz.checkout_default_command,
-          :regex => '',
-          :regex_replacement => '',
-          :fixed_url => '',
-          :access => 'permission',
-          :append_path => (klazz.allow_subtree_checkout? ? '1' : '0'),
-          :is_default => '1',
-          :display_login => '0'
+          protocol: scm,
+          command: klazz.checkout_default_command,
+          regex: '',
+          regex_replacement: '',
+          fixed_url: '',
+          access: 'permission',
+          append_path: (klazz.allow_subtree_checkout? ? '1' : '0'),
+          is_default: '1',
+          display_login: '0'
         })]
       end
      settings_defaults
@@ -59,7 +59,7 @@ Please select the desired protocol below to get the URL.
     end
 
     # add our factories to factory girl's load path
-    initializer "checkout.register_factories", :after => "factory_girl.set_factory_paths" do |app|
+    initializer "checkout.register_factories", after: "factory_girl.set_factory_paths" do |app|
       FactoryGirl.definition_file_paths << File.expand_path(self.root.to_s + '/spec/factories') if defined?(FactoryGirl)
     end
 
@@ -85,7 +85,7 @@ Please select the desired protocol below to get the URL.
 
         requires_openproject ">= 4.0.0"
 
-        settings :default => Engine.settings, :partial => 'settings/openproject_checkout'
+        settings default: Engine.settings, partial: 'settings/openproject_checkout'
 
         Redmine::WikiFormatting::Macros.register do
           desc <<-EOF

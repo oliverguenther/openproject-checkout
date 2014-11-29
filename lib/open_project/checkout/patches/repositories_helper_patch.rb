@@ -15,7 +15,7 @@ module OpenProject::Checkout
       def repository_field_tags_with_checkout(form, repository)
         tags = repository_field_tags_without_checkout(form, repository) || ""
         return tags if repository.class.name == "Repository"
-        tags + render(:partial => 'projects/settings/repository_checkout', :locals => {:form => form, :repository => repository, :scm => repository.type.demodulize})
+        tags + render(partial: 'projects/settings/repository_checkout', locals: {form: form, repository: repository, scm: repository.type.demodulize})
       end
 
       def scm_select_tag_with_javascript(*args)

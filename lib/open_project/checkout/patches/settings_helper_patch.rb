@@ -13,7 +13,7 @@ module OpenProject::Checkout
     module InstanceMethods
       def administration_settings_tabs_with_checkout
         tabs = administration_settings_tabs_without_checkout
-        tabs << {:name => 'checkout', :partial => 'settings/checkout', :label => :label_checkout}
+        tabs << {name: 'checkout', partial: 'settings/checkout', label: :label_checkout}
       end
     end
   end

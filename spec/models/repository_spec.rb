@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe Repository, :type => :model do
+describe Repository, type: :model do
 
   describe "initialize" do
     before(:each) do

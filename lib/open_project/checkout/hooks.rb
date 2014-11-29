@@ -38,14 +38,14 @@ module OpenProject::Checkout
       default = protocols.find(&:default?) || protocols.first
 
       context.merge!({
-        :repository => repository,
-        :protocols => protocols,
-        :default_protocol => default,
-        :checkout_path => path
+        repository: repository,
+        protocols: protocols,
+        default_protocol: default,
+        checkout_path: path
       })
 
-      options = {:partial => "openproject_checkout_hooks/view_repositories_show_contextual"}
-      context[:controller].send(:render_to_string, {:locals => context}.merge(options))
+      options = {partial: "openproject_checkout_hooks/view_repositories_show_contextual"}
+      context[:controller].send(:render_to_string, {locals: context}.merge(options))
     end
   end
 end

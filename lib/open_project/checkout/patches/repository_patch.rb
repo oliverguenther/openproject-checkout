@@ -72,7 +72,7 @@ module OpenProject::Checkout
           end
 
           protocols.collect do |p|
-            OpenProject::Checkout::Protocol.new p.merge({:repository => self})
+            OpenProject::Checkout::Protocol.new p.merge({repository: self})
           end
         end
       end
