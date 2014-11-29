@@ -71,7 +71,7 @@ module OpenProject::Checkout
             protocols = []
           end
 
-          protocols.collect do |p|
+          protocols.map do |p|
             OpenProject::Checkout::Protocol.new p.merge(repository: self)
           end
         end
@@ -81,7 +81,7 @@ module OpenProject::Checkout
         # value is an Array or a Hash
         if value.is_a? Hash
           value = value.dup.delete_if { |id, _protocol| id.to_i < 0 }
-          value = value.sort { |(ak, _), (bk, _)|ak <=> bk }.collect { |_id, protocol| protocol }
+          value = value.sort { |(ak, _), (bk, _)|ak <=> bk }.map { |_id, protocol| protocol }
         end
 
         checkout_settings['checkout_protocols'] = value

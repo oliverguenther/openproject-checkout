@@ -25,7 +25,7 @@ module OpenProject::Checkout
                   value.delete_if(&:blank?)
                 when Hash
                   # change protocols hash to array.
-                  value = value.sort { |(ak, _), (bk, _)|ak <=> bk }.collect { |_id, protocol| protocol } if name.start_with? 'protocols_'
+                  value = value.sort { |(ak, _), (bk, _)|ak <=> bk }.map { |_id, protocol| protocol } if name.start_with? 'protocols_'
                 end
                 settings[name.to_sym] = value
               end
