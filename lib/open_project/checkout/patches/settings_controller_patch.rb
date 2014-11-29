@@ -22,10 +22,10 @@ module OpenProject::Checkout
                 case value
                 when Array
                   # remove blank values in array settings
-                  value.delete_if {|v| v.blank? }
+                  value.delete_if(&:blank?)
                 when Hash
                   # change protocols hash to array.
-                  value = value.sort{|(ak, _),(bk, _)|ak<=>bk}.collect{|id, protocol| protocol} if name.start_with? "protocols_"
+                  value = value.sort { |(ak, _), (bk, _)|ak <=> bk }.collect { |_id, protocol| protocol } if name.start_with? 'protocols_'
                 end
                 settings[name.to_sym] = value
               end

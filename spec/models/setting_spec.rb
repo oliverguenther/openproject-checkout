@@ -6,7 +6,7 @@ describe Setting, type: :model do
     allow(Setting).to receive(:checkout_display_checkout_info).and_return('everywhere')
   end
 
-  it "should recognize checkout methods" do
+  it 'should recognize checkout methods' do
     expect(Setting.checkout_display_checkout_info).to eql Setting.plugin_openproject_checkout['display_checkout_info']
     expect(Setting.checkout_display_checkout_info).to eql Setting.plugin_openproject_checkout[:display_checkout_info]
   end

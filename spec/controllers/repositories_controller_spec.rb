@@ -5,7 +5,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe RepositoriesController, type: :controller do
 
   let(:project) { FactoryGirl.create(:project, is_public: true) }
-  let(:user) { FactoryGirl.create(:user, login: "repouser", mail: "repouser@test.com") }
+  let(:user) { FactoryGirl.create(:user, login: 'repouser', mail: 'repouser@test.com') }
   let(:role) { FactoryGirl.create(:role, permissions: [:browse_repository]) }
   let!(:member) { FactoryGirl.create(:member, user: user, project: project, roles: [role]) }
 
@@ -16,13 +16,13 @@ describe RepositoriesController, type: :controller do
     allow(Setting).to receive(:autofetch_changesets).and_return(false)
 
     @repository = Repository::Subversion.create(project: project,
-             url: subversion_repository_url)
+                                                url: subversion_repository_url)
     allow(@controller).to receive(:user_setup)
 
     setup_subversion_protocols
 
     @project = project
-    @project.enabled_module_names << "repository"
+    @project.enabled_module_names << 'repository'
     @project.repository = @repository
     @project.save!
 
@@ -45,7 +45,7 @@ describe RepositoriesController, type: :controller do
     expect(response).to render_template('common/error')
   end
 
-  it "should display the protocol selector" do
+  it 'should display the protocol selector' do
     get_repo
     expect(response).to be_success
     expect(response).to render_template('show')
@@ -56,7 +56,7 @@ describe RepositoriesController, type: :controller do
     end
   end
 
-  it "should display the description" do
+  it 'should display the description' do
     get_repo
     expect(response).to be_success
     expect(response).to render_template('show')
@@ -73,7 +73,7 @@ describe RepositoriesController, type: :controller do
       expect(response).to render_template('show')
       expect(response.body).not_to have_selector('div.repository-info')
 
-      get :entry, project_id: @project.id, path: "subversion_test/folder/helloworld.rb"
+      get :entry, project_id: @project.id, path: 'subversion_test/folder/helloworld.rb'
       expect(response).to be_success
       expect(response).to render_template('entry')
       expect(response.body).not_to have_selector('div.repository-info')
@@ -87,7 +87,7 @@ describe RepositoriesController, type: :controller do
       expect(response).to render_template('show')
       expect(response.body).to have_selector('div.repository-info', /Please select the desired protocol below to get the URL/)
 
-      get :entry, project_id: @project.id, path: "subversion_test/folder/helloworld.rb"
+      get :entry, project_id: @project.id, path: 'subversion_test/folder/helloworld.rb'
       expect(response).to be_success
       expect(response).to render_template('entry')
       expect(response.body).not_to have_selector('div.repository-info')
@@ -101,7 +101,7 @@ describe RepositoriesController, type: :controller do
       expect(response).to render_template('show')
       expect(response.body).to have_selector('div.repository-info', /Please select the desired protocol below to get the URL/)
 
-      get :entry, project_id: @project.id, path: "subversion_test/folder/helloworld.rb"
+      get :entry, project_id: @project.id, path: 'subversion_test/folder/helloworld.rb'
       expect(response).to be_success
       expect(response).to render_template('entry')
       expect(response.body).to have_selector('div.repository-info')

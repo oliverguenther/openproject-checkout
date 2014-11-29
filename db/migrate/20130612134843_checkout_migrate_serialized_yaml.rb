@@ -17,7 +17,7 @@
 # See doc/COPYRIGHT.md for more details.
 #++
 
-require Rails.root.join("db","migrate","migration_utils","yaml_migrator").to_s
+require Rails.root.join('db', 'migrate', 'migration_utils', 'yaml_migrator').to_s
 
 class CheckoutMigrateSerializedYaml < ActiveRecord::Migration
   include Migration::YamlMigrator

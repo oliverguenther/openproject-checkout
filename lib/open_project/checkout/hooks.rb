@@ -6,12 +6,12 @@ module OpenProject::Checkout
     # * :params => Current parameters
     # * :project => Current project
     #
-    def view_common_error_details(context={})
+    def view_common_error_details(context = {})
       params = context[:params]
       project = context[:project]
       repository = project ? project.repository : nil
 
-      if params[:controller] == "repository"
+      if params[:controller] == 'repository'
         show_repository_context(context, context[:project], context[:repository])
       end
     end
@@ -22,7 +22,7 @@ module OpenProject::Checkout
 
     private
 
-    def show_repository_context(context, project, repository)
+    def show_repository_context(context, _project, repository)
       return unless repository && (
         Setting.checkout_display_checkout_info == 'everywhere' || (
           Setting.checkout_display_checkout_info == 'browse' &&
@@ -34,18 +34,18 @@ module OpenProject::Checkout
         p.access_rw(User.current)
       end
 
-      path = context[:controller].instance_variable_get("@path")
+      path = context[:controller].instance_variable_get('@path')
       default = protocols.find(&:default?) || protocols.first
 
-      context.merge!({
+      context.merge!(
         repository: repository,
         protocols: protocols,
         default_protocol: default,
         checkout_path: path
-      })
+      )
 
-      options = {partial: "openproject_checkout_hooks/view_repositories_show_contextual"}
-      context[:controller].send(:render_to_string, {locals: context}.merge(options))
+      options = { partial: 'openproject_checkout_hooks/view_repositories_show_contextual' }
+      context[:controller].send(:render_to_string, { locals: context }.merge(options))
     end
   end
 end

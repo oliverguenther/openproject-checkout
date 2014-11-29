@@ -11,7 +11,7 @@ module OpenProject::Checkout
       class_eval src, __FILE__, __LINE__
     end
 
-    def initialize(args={})
+    def initialize(args = {})
       args = args.dup
 
       @protocol = args.delete :protocol
@@ -34,16 +34,16 @@ module OpenProject::Checkout
       @repository = args.delete :repository
     end
 
-    def full_command(path = "")
-      cmd = ""
+    def full_command(path = '')
+      cmd = ''
       if repository.checkout_display_command?
-        cmd = self.command.present? ? self.command.strip + " " : ""
+        cmd = command.present? ? command.strip + ' ' : ''
       end
-      cmd + URI.escape(self.url(path))
+      cmd + URI.escape(url(path))
     end
 
     def command
-      @command || self.repository && self.repository.checkout_default_command || ""
+      @command || repository && repository.checkout_default_command || ''
     end
 
     def access_rw(user)
@@ -76,20 +76,20 @@ module OpenProject::Checkout
 
     def fixed_url
       @fixed_url.present? ? @fixed_url : begin
-        if (regex.blank? || regex_replacement.blank?)
+        if regex.blank? || regex_replacement.blank?
           repository.url
         else
           repository.url.gsub(Regexp.new(regex), regex_replacement)
         end
       end
     rescue RegexpError
-      repository.url || ""
+      repository.url || ''
     end
 
-    def url(path = "")
-      return "" unless repository
+    def url(path = '')
+      return '' unless repository
 
-      url = fixed_url.sub(/\/+$/, "")
+      url = fixed_url.sub(/\/+$/, '')
       if repository.allow_subtree_checkout? && self.append_path? && path.present?
         url = "#{url}/#{path}"
       end

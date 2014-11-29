@@ -13,7 +13,7 @@ module OpenProject::Checkout
         # or set using Setting.some_setting_name = "some value"
         Redmine::Plugin.find(:openproject_checkout).settings[:default].keys.each do |name|
           if name.start_with?('protocols_')
-            default = "[]"
+            default = '[]'
           else
             default = <<-END_SRC
               begin
@@ -54,16 +54,16 @@ module OpenProject::Checkout
 
     module ClassMethods
       def store_with_checkout(name, value)
-        if name.to_s.starts_with? "checkout_"
-          self.send("#{name}=", value)
+        if name.to_s.starts_with? 'checkout_'
+          send("#{name}=", value)
         else
           store_without_checkout(name, value)
         end
       end
 
       def retrieve_with_checkout(name)
-        if name.to_s.starts_with? "checkout_"
-          self.send("#{name}")
+        if name.to_s.starts_with? 'checkout_'
+          send("#{name}")
         else
           retrieve_without_checkout(name)
         end

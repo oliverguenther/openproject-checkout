@@ -22,7 +22,7 @@ module OpenProject::Checkout
 
       def checkout_default_command
         # default implementation
-        ""
+        ''
       end
     end
 
@@ -40,7 +40,7 @@ module OpenProject::Checkout
       end
 
       def checkout_overwrite?
-        self.type.present? && checkout_overwrite.to_i > 0
+        type.present? && checkout_overwrite.to_i > 0
       end
 
       def checkout_description=(value)
@@ -54,7 +54,7 @@ module OpenProject::Checkout
           if type.present? && OpenProject::Checkout::CheckoutHelper.supported_scm.include?(type.demodulize) && Setting.send("checkout_overwrite_description_#{type.demodulize}?")
             Setting.send("checkout_description_#{type.demodulize}")
           else
-            Setting.send("checkout_description_Abstract")
+            Setting.send('checkout_description_Abstract')
           end
         end
       end
@@ -72,7 +72,7 @@ module OpenProject::Checkout
           end
 
           protocols.collect do |p|
-            OpenProject::Checkout::Protocol.new p.merge({repository: self})
+            OpenProject::Checkout::Protocol.new p.merge(repository: self)
           end
         end
       end
@@ -80,8 +80,8 @@ module OpenProject::Checkout
       def checkout_protocols=(value)
         # value is an Array or a Hash
         if value.is_a? Hash
-          value = value.dup.delete_if {|id, protocol| id.to_i < 0 }
-          value = value.sort{|(ak,_),(bk,_)|ak<=>bk}.collect{|id,protocol| protocol}
+          value = value.dup.delete_if { |id, _protocol| id.to_i < 0 }
+          value = value.sort { |(ak, _), (bk, _)|ak <=> bk }.collect { |_id, protocol| protocol }
         end
 
         checkout_settings['checkout_protocols'] = value
@@ -124,7 +124,7 @@ end
 
 Repository.send(:include, OpenProject::Checkout::RepositoryPatch)
 
-subtree_checkout_repos = ["Subversion", "Cvs"]
+subtree_checkout_repos = ['Subversion', 'Cvs']
 commands = {
   'Bazaar' => 'bzr checkout',
   'Cvs' => 'cvs checkout',
@@ -138,7 +138,7 @@ OpenProject::Checkout::CheckoutHelper.supported_scm.each do |scm|
   require_dependency "repository/#{scm.underscore}"
   cls = Repository.const_get(scm)
 
-  allow_subtree_checkout = ""
+  allow_subtree_checkout = ''
   if subtree_checkout_repos.include? scm
     allow_subtree_checkout = <<-EOS
      def allow_subtree_checkout?
@@ -147,7 +147,7 @@ OpenProject::Checkout::CheckoutHelper.supported_scm.each do |scm|
     EOS
   end
 
-  checkout_command = ""
+  checkout_command = ''
   if commands[scm]
     checkout_command = <<-EOS
       def checkout_default_command
