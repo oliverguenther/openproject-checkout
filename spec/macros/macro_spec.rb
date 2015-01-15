@@ -38,7 +38,10 @@ describe "Macros" do
     @project = nil
 
     text = "{{repository(svn+ssh)}}"
-    expect(format_text(text)).to eql "<p><div class=\"flash error\">Error executing the macro repository (Checkout protocol svn+ssh not found)</div></p>"
+    error = Nokogiri::HTML(format_text(text)).css('.flash.error')
+    message = "Error executing the macro repository (Checkout protocol svn+ssh not found)"
+
+    expect(error.inner_text.strip).to eql message
   end
 
   it "should display checkout url from stated project" do
