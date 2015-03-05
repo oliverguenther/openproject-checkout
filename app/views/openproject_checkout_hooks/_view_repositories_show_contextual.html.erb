@@ -4,24 +4,22 @@
   <div class="wiki<%= ' bottomline' if protocols.present? %>"><%= format_text repository.checkout_description %></div>
   <% end %>
   <% if protocols.present? %>
-  <div id="checkout_box">
-    <ul id="checkout_protocols">
-    <% protocols.each do |p| -%>
-      <li>
-        <a <%= 'class="selected"' if p == default_protocol %> id="checkout_protocol_<%= p.protocol.to_s.underscore %>" data-permission="<%= p.access_rw(User.current) %>" href="<%= URI.escape p.url(checkout_path) %>"><%=h p.protocol %></a>
-      </li>
-    <% end -%>
-    </ul>
-    <%= text_field_tag :checkout_url, h(default_protocol.full_command(checkout_path)), :readonly => true, :size => 150 %>
-    <% if default_protocol -%>
-      <p><%=l(:label_access_type, :type => "<span id=\"checkout_access\">#{l(default_protocol.access_label(User.current))}</span>").html_safe %></p>
-    <%- end -%>
-
-    <%= javascript_tag do -%>
-      var checkout_access   = $H({<%= protocols.inject([]){|r, p| r << "'checkout_protocol_#{p.protocol.to_s.underscore}': '#{l(p.access_label(User.current))}'"}.join(', ').html_safe %>});
-      var checkout_commands = $H({<%= protocols.inject([]){|r, p| r << "'checkout_protocol_#{p.protocol.to_s.underscore}': '#{escape_javascript(p.full_command(checkout_path))}'"}.join(', ').html_safe %>});
-    <% end %>
-  </div>
+    <div id="checkout_box">
+      <form class="form" id="protocols">
+        <% protocols.each do |p| %>
+          <div class="form--field -full-width">
+            <div class="form--field-container">
+              <div class="form--field-affix">
+                <span id="checkout_protocol_<%= p.protocol.to_s.underscore %>" data-permission="<%= p.access_rw(User.current) %>" href="<%= URI.escape p.url(checkout_path) %>"><%=h p.protocol %></span>
+              </div>
+              <%= styled_text_field_tag :checkout_url, h(p.full_command(checkout_path)), readonly: true %>
+            </div>
+            <div class="form--field-instructions">
+              <%=l(:label_access_type, :type => "<span id=\"checkout_access\">#{l(p.access_label(User.current))}</span>").html_safe %></p>
+            </div>
+          </div>
+        <% end %>
+      </form>
+    </div>
   <% end%>
 </div>
-<div style="clear: left"></div>
