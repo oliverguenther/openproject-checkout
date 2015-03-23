@@ -1,15 +1,19 @@
 <div>
-  <p><%= setting_check_box "checkout_overwrite_description_#{scm}", :label => :setting_checkout_overwrite_description, :onclick => <<-EOF
-    Effect.toggle($('settings_checkout_description_#{scm}').up("div").up("div"), 'slide', {duration:0.2});
-  EOF
-  %></p>
-
-  <div>
-    <p><%= setting_text_area "checkout_description_#{scm}", :cols => 60, :rows => 5, :class => 'wiki-edit', :label => :setting_checkout_description %></p>
-    <%= wikitoolbar_for "settings_checkout_description_#{scm}" %>
+  <div class="form--field">
+    <%= setting_check_box "checkout_overwrite_description_#{scm}", :label => :setting_checkout_overwrite_description, :onclick => <<-EOF
+      Effect.toggle($('settings_checkout_description_#{scm}').up("div").up("div"), 'slide', {duration:0.2});
+    EOF
+    %>
   </div>
 
-  <p><%= setting_check_box "checkout_display_command_#{scm}", :label => :field_checkout_display_command %></p>
+
+  <div class="form--field">
+    <%= setting_text_area "checkout_description_#{scm}", :cols => 60, :rows => 5, :class => 'wiki-edit', :label => :setting_checkout_description %>
+    <%= wikitoolbar_for "settings_checkout_description_#{scm}" %>
+  </div>
+  <div class="form--field">
+    <%= setting_check_box "checkout_display_command_#{scm}", :label => :field_checkout_display_command %>
+  </div>
 
   <%= javascript_tag do %>
     <% repo = "Repository::#{scm}".constantize %>
