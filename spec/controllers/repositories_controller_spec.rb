@@ -50,7 +50,7 @@ describe RepositoriesController, :type => :controller do
     expect(response).to be_success
     expect(response).to render_template('show')
 
-    expect(response.body).to have_selector('ul#checkout_protocols') do
+    expect(response.body).to have_selector('#checkout_box') do
       with_tag('a[id=?][href=?]', 'checkout_protocol_subversion', "file:///#{Rails.root.to_s.gsub(%r{config\/\.\.}, '')}/tmp/test/subversion_repository")
       with_tag('a[id=?][href=?]', 'checkout_protocol_svn+ssh', 'svn+ssh://repouser@svn.foo.bar/svn/subversion_repository')
     end
