@@ -8,7 +8,6 @@ module OpenProject::Checkout
       base.send(:include, InstanceMethods)
 
       base.class_eval do
-        unloadable
         serialize :checkout_settings, Hash
         after_initialize :init_checkout_settings
       end
@@ -162,7 +161,6 @@ OpenProject::Checkout::CheckoutHelper.supported_scm.each do |scm|
       base.extend ChildClassMethods
 
       base.class_eval do
-        unloadable
         serialize :checkout_settings, Hash
       end
     end
