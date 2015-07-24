@@ -13,8 +13,8 @@ en:
   setting_checkout_command: "Checkout command"
 
   setting_checkout_overwrite_description: "Overwrite default description"
-  field_checkout_overwrite: "Overwrite default settings for checkout protocols"
-  field_checkout_display_command: "Display checkout command"
+  checkout_overwrite: "Overwrite default settings for checkout protocols"
+  checkout_display_command: "Display checkout command"
 
   label_protocol_plural: "Protocols"
   button_add_protocol: "Add Protocol"

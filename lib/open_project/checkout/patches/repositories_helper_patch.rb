@@ -6,24 +6,16 @@ module OpenProject::Checkout
       base.send(:include, InstanceMethods)
 
       base.class_eval do
-        alias_method_chain :repository_field_tags, :checkout
-        alias_method_chain :scm_select_tag, :javascript
+        alias_method_chain :show_settings_save_button?, :checkout
       end
     end
 
     module InstanceMethods
-      def repository_field_tags_with_checkout(form, repository)
-        tags = repository_field_tags_without_checkout(form, repository) || ""
-        return tags if repository.class.name == "Repository"
-        tags + render(:partial => 'projects/settings/repository_checkout', :locals => {:form => form, :repository => repository, :scm => repository.type.demodulize})
-      end
 
-      def scm_select_tag_with_javascript(*args)
-        content_for :header_tags do
-          javascript_include_tag('checkout/subform.js') +
-          stylesheet_link_tag('checkout/checkout.css')
-        end
-        scm_select_tag_without_javascript(*args)
+      ##
+      # As this plugin adds settings to the repository settings page, always show the save button
+      def show_settings_save_button_with_checkout?(repository)
+        true
       end
     end
   end

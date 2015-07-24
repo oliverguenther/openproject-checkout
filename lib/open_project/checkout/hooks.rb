@@ -48,4 +48,10 @@ module OpenProject::Checkout
       context[:controller].send(:render_to_string, {:locals => context}.merge(options))
     end
   end
+
+
+  class RepositorySettingsHook < Redmine::Hook::ViewListener
+    render_on :repository_settings_fields,
+              partial: 'projects/settings/repository_checkout'
+  end
 end

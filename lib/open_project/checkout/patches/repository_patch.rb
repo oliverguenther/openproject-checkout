@@ -11,7 +11,12 @@ module OpenProject::Checkout
         unloadable
         serialize :checkout_settings, Hash
         after_initialize :init_checkout_settings
+
+        class << self
+          alias_method_chain :permitted_params, :checkout
+        end
       end
+
     end
 
     module ClassMethods
@@ -23,6 +28,27 @@ module OpenProject::Checkout
       def checkout_default_command
         # default implementation
         ""
+      end
+
+      def permitted_params_with_checkout(params)
+
+        # Allow default params to be returned
+        args = permitted_params_without_checkout(params)
+
+        # Merge them with the standard params
+        # from checkout plugins
+        args = args.merge(params.permit(
+          :checkout_overwrite,
+          :checkout_description,
+          :checkout_display_command,
+        ))
+
+        # Whitelist the hash checkout_protocols, if it exists
+        if params.key? :checkout_protocols
+          args.merge(checkout_protocols: params[:checkout_protocols].permit!)
+        else
+          args
+        end
       end
     end
 
