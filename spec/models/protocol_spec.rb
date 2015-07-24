@@ -7,7 +7,8 @@ describe OpenProject::Checkout::Protocol, :type => :model do
   let(:user) { FactoryGirl.create(:user) }
   let!(:member) { FactoryGirl.create(:member, user: user, project: project, roles: [role]) }
   let(:admin) { FactoryGirl.create(:admin) }
-  let!(:repo) { FactoryGirl.create(:svn_repository, project: project, url: 'http://example.com/svn/testrepo') }
+  let!(:repo) { FactoryGirl.create(:repository_subversion, project: project,
+                                   url: 'http://example.com/svn/testrepo') }
 
   before(:each) do
     project.enabled_module_names = project.enabled_module_names << "repository"
