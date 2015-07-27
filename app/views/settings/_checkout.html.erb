@@ -1,20 +1,5 @@
 <%= render partial: 'shared/checkout_header' %>
 <%= styled_form_tag :action => 'edit', :tab => 'checkout' do %>
-  <%= javascript_tag do %>
-  var protocolForms = $H();
-  document.observe("dom:loaded", function() {
-    $('tab-content-checkout').select('fieldset.collapsed').each(function(e){
-      e.down('div').hide();
-    });
-    <%
-      OpenProject::Checkout::CheckoutHelper.supported_scm.select{|scm| Setting.enabled_scm.include?(scm)}.each do |scm|
-        next if Setting.send("checkout_overwrite_description_#{scm}?")
-    -%>
-    $('settings_checkout_description_<%= scm %>').up('div').up('div').hide();
-    <%- end %>
-  });
-  <% end %>
-
   <div class="form--section settings">
     <div class="form--field">
       <%= setting_select :checkout_display_checkout_info, [
@@ -31,11 +16,13 @@
 
     <div id="protocol_table">
       <% OpenProject::Checkout::CheckoutHelper.supported_scm.select{|scm| Setting.enabled_scm.include?(scm)}.each do |scm| -%>
-      <fieldset class="header_collapsible collapsible collapsed">
-        <legend title="<%= Repository.const_get(scm).scm_name %>" onclick="toggleFieldset(this);">
-          <a href="javascript:"><%= Repository.const_get(scm).scm_name %></a>
+      <% collapsed = Setting.send("checkout_overwrite_description_#{scm}?") != true %>
+      <fieldset id="checkout_protocol_<%= scm %>"
+                class="form--fieldset -collapsible <%= collapsed ? 'collapsed' : '' %>">
+        <legend class="form--fieldset-legend" title="<%= scm %>" onclick="toggleFieldset(this);">
+          <a href="javascript:"><%= scm %></a>
         </legend>
-        <div><%= render :partial => 'checkout_scm', :locals => {:scm => scm} %></div>
+        <div style=" <%= collapsed ? 'display: none' : '' %>"><%= render :partial => 'checkout_scm', :locals => {:scm => scm} %></div>
       </fieldset>
       <%- end %>
     </div>
